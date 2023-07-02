@@ -13,7 +13,7 @@ const App = () => {
   const [blobList, setBlobList] = useState([]);
 
   // current file to upload into container
-  const [fileSelected, setFileSelected] = useState();
+  const [fileSelected, setFileSelected] = useState([]);
   const [fileUploaded, setFileUploaded] = useState("");
 
   // UI/form management
@@ -30,20 +30,25 @@ const App = () => {
 
   const onFileChange = (event) => {
     // capture file into state
-    setFileSelected(event.target.files[0]);
+    setFileSelected(event.target.files);
   };
 
   const onFileUpload = async () => {
-    if (fileSelected && fileSelected?.name) {
+    if (fileSelected.length > 0) {
       // prepare UI
+
       setUploading(true);
 
-      // *** UPLOAD TO AZURE STORAGE ***
-      await uploadFileToBlob(fileSelected);
+      // Upload all the selected files to Azure blob storage
+      for (let i = 0; i < fileSelected.length; i++) {
+        await uploadFileToBlob(fileSelected[i]);
+        console.log("Uploading file to Azure Blob Storage...");
+      }
+
 
       // reset state/form
-      setFileSelected(null);
-      setFileUploaded(fileSelected.name);
+      setFileSelected([]);
+      setFileUploaded();
       setUploading(false);
       setInputKey(Math.random().toString(36));
     }
@@ -51,9 +56,15 @@ const App = () => {
 
   // display form
   const DisplayForm = () => (
-    <div>
-      <input type="file" onChange={onFileChange} key={inputKey || ""} />
-      <button type="submit" onClick={onFileUpload}>
+    <div className="fixed bottom-0 p-2 w-full bg-[#4ade80]">
+      <input 
+        className="bg-white rounded-3xl m-1"
+        multiple
+        type="file"
+        onChange={onFileChange}
+        key={inputKey || ""}
+      />
+      <button type="submit" onClick={onFileUpload} className="bg-green-200 px-5 py-3 text-sm shadow-sm rounded-2xl m-1">
         Upload!
       </button>
     </div>
@@ -61,14 +72,15 @@ const App = () => {
 
   return (
     <div className="space-y-2 text-center">
-      <h1 className="text-6xl font-semibold">Tzujagram</h1>
-      {storageConfigured && !uploading && DisplayForm()}
+      <h1 className="text-6xl font-semibold sticky top-0 z-30 w-full bg-[#4ade80] p-2">Tzujagram</h1>
       {storageConfigured && uploading && <div>Uploading</div>}
       <hr />
       {storageConfigured && blobList.length > 0 && (
         <DisplayImagesFromContainer blobList={blobList} />
       )}
       {!storageConfigured && <div>Storage is not configured.</div>}
+      {storageConfigured && !uploading && DisplayForm()}
+
     </div>
   );
 };
