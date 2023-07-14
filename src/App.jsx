@@ -72,7 +72,7 @@ const App = () => {
 
   return (
     <div className="space-y-2 text-center">
-      <h1 className="text-6xl font-semibold sticky top-0 z-30 w-full bg-[#4ade80] p-2">Tzujagram</h1>
+      <h1 className="text-6xl font-semibold sticky top-0 z-30 w-full bg-[#4ade80] p-2">Tzujiagram</h1>
       {storageConfigured && uploading && <div>Uploading</div>}
       <hr />
       {storageConfigured && blobList.length > 0 && (
