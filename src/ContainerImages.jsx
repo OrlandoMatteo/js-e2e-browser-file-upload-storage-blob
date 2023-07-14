@@ -8,7 +8,6 @@ const DisplayImagesFromContainer = ({ blobList }) => {
   const props = { openModal, setOpenModal };
   function toggleList()
   {
-    console.log("toggleList");
     //set the state of  viewMode to list if the checkbox is checked
     if (document.getElementById("list").checked){
       document.getElementById("view").classList.remove("grid-cols-3");
