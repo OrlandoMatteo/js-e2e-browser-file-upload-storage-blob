@@ -30,12 +30,10 @@
   },
   "browserslist": {
     "production": [
-      "defaults and supports es6-module",
-      "maintained node versions"
+      "defaults"
     ],
     "development": [
-      "defaults and supports es6-module",
-      "maintained node versions"
+      "defaults"
     ]
   },
   "devDependencies": {
