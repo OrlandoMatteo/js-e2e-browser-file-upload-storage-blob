@@ -11,7 +11,6 @@ const storageAccountName = process.env.REACT_APP_AZURE_STORAGE_RESOURCE_NAME;
 
 // <snippet_get_client>
 const uploadUrl = `https://${storageAccountName}.blob.core.windows.net/?${sasToken}`;
-console.log(uploadUrl);
 
 // get BlobService = notice `?` is pulled out of sasToken - if created in Azure portal
 const blobService = new BlobServiceClient(uploadUrl);
@@ -36,16 +35,22 @@ export const getBlobsInContainer = async () => {
   // get list of blobs in container
   // eslint-disable-next-line
   for await (const blob of containerClient.listBlobsFlat()) {
-    console.log(`${blob.name}`);
 
     const blobItem = {
       url: `https://${storageAccountName}.blob.core.windows.net/${containerName}/${blob.name}?${sasToken}`,
-      name: blob.name
+      name: blob.name,
+      date: blob.properties.createdOn
     }
 
     // if image is public, just construct URL
     returnedBlobUrls.push(blobItem);
   }
+
+  //sort array of blobs by date
+  returnedBlobUrls.sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
+  
 
   return returnedBlobUrls;
 };
