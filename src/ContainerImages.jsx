@@ -55,7 +55,7 @@ const DisplayImagesFromContainer = ({ blobList }) => {
               <img
                 src={item.url}
                 alt=""
-                className="m-auto h-full rounded-2xl object-scale-down"
+                className="m-auto rounded-2xl object-scale-down my-0"
                 data-modal-target="defaultModal"
                 data-modal-toggle="defaultModal"
                 onClick={() => {
