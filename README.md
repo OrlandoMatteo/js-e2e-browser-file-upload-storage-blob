@@ -4,7 +4,7 @@ languages:
 - javascript
 - typescript
 - nodejs
-name: "JavaScript end-to-end client file upload to Azure Storage Blobs"
+name: "JavaScript  client file upload to Azure Storage Blobs"
 description: "Use an Azure Static Web App (client-side React app) to upload an image file to an Azure Storage blob using an Azure Storage @azure/storage-blob npm package and an Azure Storage SAS token."
 products:
 - azure
